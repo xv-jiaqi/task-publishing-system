@@ -2,3 +2,5 @@
 node_modules/
 # 忽略静态文件库
 public/libs/
+# IDE文件
+.idea/
