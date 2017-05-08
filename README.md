@@ -21,14 +21,14 @@
 
 ## 流程图
 
-![用户相关](http://oe8r161mt.bkt.clouddn.com/taskSystem/user.png)
+![用户相关](http://oe8r161mt.bkt.clouddn.com/taskSystem/user.png?imageView/2/w/500/q/100)
 
-![任务流程](http://oe8r161mt.bkt.clouddn.com/taskSystem/task.png)
+![任务流程](http://oe8r161mt.bkt.clouddn.com/taskSystem/task.png?imageView/2/w/500/q/100)
 
 
 ## 数据库设计
 
-![数据库设计](http://oe8r161mt.bkt.clouddn.com/taskSystem/DB.png)
+![数据库设计](http://oe8r161mt.bkt.clouddn.com/taskSystem/DB.png?imageView/2/w/500/q/100)
 
 
 ## 开发流程
