@@ -22,7 +22,7 @@
 ## 流程图
 
 ![用户相关](http://oe8r161mt.bkt.clouddn.com/taskSystem/user.png?imageView/2/w/500/q/100)
-
+<br>
 ![任务流程](http://oe8r161mt.bkt.clouddn.com/taskSystem/task.png?imageView/2/w/500/q/100)
 
 
@@ -58,9 +58,13 @@
 ### 5、 安装`bower`依赖：`bower install`
 ### 6、 启动项目入口文件：`node app.js`
 ### 7、 浏览器查看效果
- - 7.1  `http://localhost:3000`查看首页效果；
- - 7.2  `http://localhost:3000/admin/list`列表页；
- - 7.3  `http://localhost:3000/admin/movie`后台录入页。
+ 路由可查看`routes\index.js`下具体定义，主要路由如下：
+ - 7.1  `http://localhost:8888` 首页
+ - 7.2  `http://localhost:8888/register` 注册
+ - 7.3  `http://localhost:8888/list` 任务列表，删除，查看，分享
+ - 7.4  `http://localhost:8888/update/:id` 任务详情，修改
+ - 7.5  `http://localhost:8888/newTask` 创建任务
+ 
 
 ## 参考
 

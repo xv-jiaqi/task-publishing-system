@@ -7,6 +7,7 @@ let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
 let config = require('./config');
 
+
 app.listen(config.port);                // 监听端口
 console.log(`start on port ${config.port}`);
 
@@ -19,9 +20,6 @@ app.use(require('serve-static')('public')); // 静态文件处理 路径：publi
 
 app.set('views', './views/pages');      // 设置视图默认的文件路径
 app.set('view engine', 'jade');         // 设置视图引擎：jade
-
-// 注册路由
-routes(app);
 
 // session 中间件
 app.use(session({
@@ -41,12 +39,14 @@ app.use((req, res, next) => {
     if (!req.session) {
         return next(new Error('session异常'));
     } else {
-        req.session.userInfo = {};             // 这里挂载用户相关信息
+        // req.session.userInfo = {};            // 这里挂载用户相关信息
     }
 
     next();
 });
 
-let bodyParser = require('body-parser');
 // 因为后台录入页有提交表单的步骤，故加载此模块方法（bodyParser模块来做文件解析），将表单里的数据进行格式化
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(require('body-parser').urlencoded({extended: true}));
+
+// 注册路由
+routes(app);
