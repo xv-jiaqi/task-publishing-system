@@ -1,0 +1,25 @@
+{
+  "name": "task-system",
+  "authors": [
+    "kkxujq@163.com"
+  ],
+  "description": "task publishing system",
+  "main": "app.js",
+  "keywords": [
+    "Node.js",
+    "MongoDB"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

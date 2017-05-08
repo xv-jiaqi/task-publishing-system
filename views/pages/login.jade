@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            form.form-horizontal(method="post", action="/login")
+                .form-group
+                    label.col-sm-4.control-label(for="username") 用户名
+                    .col-sm-4
+                        input#username.form-control(type="text", name="users[userName]", value="#{users.userName}", placeholder="邮箱、电话号码或字母和数字组合" required="required")
+                .form-group
+                    label.col-sm-4.control-label(for="password") 密码
+                    .col-sm-4
+                        input#password.form-control(type="password", name="users[password]", value="#{users.password}" placeholder="请输入大于6位的数字字母组合密码" required="required")
+                .form-group
+                    .col-sm-4
+                    .col-sm-4
+                        button.btn.btn-success(type="submit") &nbsp;登陆&nbsp;
+                        span &emsp;点
+                            a(href="/register") 这里
+                        span 注册或
+                            a(href="http://www.imooc.com/") 忘记密码
+        .row
+            .col-sm-6.col-sm-offset-3.hidden(style="display: #{display};")
+                .alert.alert-warning
+                    strong 用户名不存在或密码错误！

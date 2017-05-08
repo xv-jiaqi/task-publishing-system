@@ -1,0 +1,4 @@
+# 忽略node_modules目录下的所有文件
+node_modules/
+# 忽略静态文件库
+public/libs/
