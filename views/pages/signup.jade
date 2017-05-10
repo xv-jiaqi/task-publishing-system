@@ -1,0 +1,50 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            form.form-horizontal(method="post", action="/signup")
+                .form-group
+                    label.col-sm-4.control-label(for="username") 用户名
+                        span.warning.glyphicon-asterisk.mark-star
+                    .col-sm-4
+                        input#username.form-control(type="text", name="userName", placeholder="请输入5-11位的用户名", required="required")
+                    .col-sm-4.prompt.error
+                .form-group
+                    label.col-sm-4.control-label(for="password") 登录密码
+                        span.warning.glyphicon-asterisk.mark-star
+                    .col-sm-4
+                        input#password.form-control(type="password", name="password", placeholder="请输入6-16位字母数字组合的密码", required="required")
+                    .col-sm-4.prompt.error
+                .form-group
+                    label.col-sm-4.control-label(for="crm-password") 确认密码
+                        span.warning.glyphicon-asterisk.mark-star
+                    .col-sm-4
+                        input#crm-password.form-control(type="password", placeholder="请确认您输入的密码", required="required")
+                    .col-sm-4.prompt.error
+                .form-group
+                    label.col-sm-4.control-label(for="pay-account") 支付佣金账户
+                        span.warning.glyphicon-asterisk.mark-star
+                    .col-sm-4
+                        input#pay-account.form-control(type="text", name="payAccount", placeholder="用于获取佣金或支付使用，可使用支付宝账户")
+                    .col-sm-4.prompt.error
+                .form-group
+                    label.col-sm-4.control-label(for="birth") 出生日期
+                    .col-sm-4
+                        input#birth.form-control(type="date", name="birth", placeholder="请选择你的出生日期")
+                    .col-sm-4.prompt
+                .form-group
+                    label.col-sm-4.control-label(for="gender") 性别
+                    .col-sm-4
+                        select#gender.form-control(name="gender")
+                            option(value="m", selected="selected") 男
+                            option(value="f") 女
+                            option(value="x") 保密
+                    .col-sm-4.prompt
+                .form-group
+                    .col-sm-4
+                    .col-sm-4.col-sm-offset-1
+                        button.btn.btn-success#btn-submit(type="submit") &emsp;提交&emsp;
+                        span &emsp;&emsp;
+                        button.btn.btn-danger#btn-reset(type="reset") &emsp;重置&emsp;
+            script(src="../js/validation.js")

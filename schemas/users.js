@@ -9,10 +9,14 @@ let usersSchema = new mongoose.Schema({
     },   // 用户名
     password: String,   // 密码
     payAccount: String, // 收款账号
-    age: {
-        type: Number,
+    birth: {
+        type: Date,
         min: 1,
         max: 200
+    },
+    gender: {
+        type: String,
+        enum: ['m','f','x']
     },
     admin: {
         type: String,
@@ -72,9 +76,9 @@ usersSchema.statics = {
             .sort('meta.updateAt')
             .exec(cb)
     },
-    findById: function (obj, cb) {
+    findById: function (id, cb) {
         return this
-            .findOne(obj)
+            .findOne({_id: id})
             .exec(cb)
     }
 };

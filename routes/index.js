@@ -6,7 +6,7 @@
 module.exports = (app) => {
 
     require('./login')(app);    // 登录路由
-    require('./regist')(app);   // 注册路由
+    require('./signup')(app);   // 注册路由
     require('./task')(app);     // 任务相关路由
 
     // index page 首页
