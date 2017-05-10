@@ -18,21 +18,19 @@ module.exports = (app) => {
 
     // 提交注册用户信息
     app.post('/signup', (req, res) => {
-        let user = req.body;
         let {userName, password, payAccount, gender, birth} = req.body;
 
-        let _user = new user({
+        let _user = new User({
             userName,
             password,
             payAccount,
             gender,
-            birth: new Date();
+            birth: birth !== '' ? birth : new Date('2000-1-1')
         });
 
         _user.save((err, user) => {
-            if (err) {
-                console.log(err);
-            }
+            if (err) console.log(err);
+
             res.redirect('/login');
         });
     });

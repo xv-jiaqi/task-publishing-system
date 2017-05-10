@@ -1,6 +1,7 @@
 let mongoose = require('mongoose');
 let bcrypt = require('bcryptjs');
 let SALT_WORK_FACTOR = 10;
+
 let usersSchema = new mongoose.Schema({
     // userId: String,
     userName: {
@@ -9,11 +10,7 @@ let usersSchema = new mongoose.Schema({
     },   // 用户名
     password: String,   // 密码
     payAccount: String, // 收款账号
-    birth: {
-        type: Date,
-        min: 1,
-        max: 200
-    },
+    birth: Date,
     gender: {
         type: String,
         enum: ['m','f','x']
