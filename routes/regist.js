@@ -17,7 +17,9 @@ module.exports = (app) => {
                 userName: '',
                 password: '',
                 crmPassword: '',
-                payAccount: ''
+                payAccount: '',
+                age: '',
+                admin: ''
             }
         });
     });

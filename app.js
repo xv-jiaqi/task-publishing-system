@@ -1,18 +1,21 @@
 let express = require('express');   // 加载express模块
 let mongoose = require('mongoose'); // 加载mongoose模块
 let path = require('path');         // 引入path模块的作用：因为页面样式的路径放在了bower_components，告诉express，请求页面里所过来的请求中，如果有请求样式或脚本，都让他们去bower_components中去查找
-let app = express();
 let routes = require('./routes');
 let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
 let config = require('./config');
-
+let app = express();
 
 app.listen(config.port);                // 监听端口
 console.log(`start on port ${config.port}`);
 
 mongoose.connect(config.mongodb);       // 连接mongodb本地数据库
-console.log('MongoDB connection success!');
+
+// 测试mongodb连接状态
+mongoose.connection.on('connected', () => console.log('Connection success!'));
+mongoose.connection.on('error', (err) => console.log(`Connection error: ${err}`));
+mongoose.connection.on('disconnected', () => console.log('Connection disconnected'));
 
 app.locals.moment = require('moment');  // 载入moment模块，格式化日期
 
@@ -36,11 +39,7 @@ app.use(session({
 }));
 
 app.use((req, res, next) => {
-    if (!req.session) {
-        return next(new Error('session异常'));
-    } else {
-        // req.session.userInfo = {};            // 这里挂载用户相关信息
-    }
+    if (!req.session) return next(new Error('session异常'));
 
     next();
 });
