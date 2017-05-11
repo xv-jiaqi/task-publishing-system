@@ -3,30 +3,32 @@ extends ../layout
 block content
     .container
         .row
+            a.btn.btn-success(target="_blank", href="/newTask") 创建我的任务
+        .row
             table.table.table-hover.table-bordered
                 thead
                     tr
                         th 任务编号
-                        th 任务标题
-                        th 任务概况
-                        th 创建时间
-                        th 最后更新日期
+                        th 任务
                         th 查看详情
+                        th 创建日期
+                        th 最后更新日期
                         th 删除
                         th 佣金
+                        th 状态
                         th 分享
                 tbody
                     each item in tasks
                         tr(class="item-id-#{item._id}")
                             td #{item._id}
                             td #{item.title}
-                            td #{item.summary}
-                            td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
-                            td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
                             td: a(target="_blank", href="/update/#{item._id}") 查看
+                            td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+                            td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
                             td
                                 button.btn.btn-danger.del(type="button", data-id="#{item._id}") 删除
                             td.glyphicon-yen #{item.account}
+                            td #{item.account}
                             td.glyphicon.glyphicon-share.shareTimeLine
 
     script(src='/js/taskDel.js')

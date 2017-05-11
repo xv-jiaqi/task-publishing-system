@@ -3,7 +3,7 @@ extends ../layout
 block content
     .container
         .row
-            form.form-horizontal(method="post", action="/resetpwd")
+            form.form-horizontal(method="post", action="/resetpwd/#{userName}")
                 .form-group
                     label.col-sm-4.control-label(for="username") 用户名
                     .col-sm-4
@@ -24,4 +24,5 @@ block content
                     .col-sm-4
                     .col-sm-4.col-sm-offset-1
                         button.btn.btn-success#btn-submit(type="submit") &emsp;提交&emsp;
-    script(src="../js/validation.js")
+            script(src="../../js/validation.js")
+            script(src="../../js/countDown.js")

@@ -2,12 +2,19 @@
     .row
         .page-header.clearfix
             h1 任务发布管理系统 #{title}
+            if user
+                h3.status.correct 欢迎 #{user.userName}，
+                    a.warning(href="/signout") 退出
+            else
+                h3.status
+                    a.warning(href="/") 登录
             .col-md-4
                 h5 #{subtitle}
             .col-md-8
                 if error
                 h4.warning #{error}
-
+                if success
+                h4.correct #{success}
 
 
 

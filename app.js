@@ -45,6 +45,7 @@ app.use(session({
 app.use((req, res, next) => {
     if (!req.session) return next(new Error('session异常'));
 
+    res.locals.user = req.session.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
 

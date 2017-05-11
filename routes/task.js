@@ -8,10 +8,11 @@
 let user = require('../models/users');
 let task = require('../models/task');
 let _underscore = require('underscore');
+let {checkLogin, checkNotLogin, isAdmin} = require('../utils/check');
 
 module.exports = (app) => {
     // 任务列表
-    app.get('/list', (req, res) => {
+    app.get('/list', checkLogin, (req, res) => {
         task.fetch((err, tasks) => {
             if (err) {
                 console.log(err);
@@ -21,7 +22,8 @@ module.exports = (app) => {
                 tasks.map((item) => item.account = item.account && item.account.toFixed(2));
 
             res.render('taskList', {
-                title: '任务发布管理系统——任务列表',
+                title: '——任务列表',
+                subtitle: '此处包含了您和其他所有用户发布的任务，您可以领取他人未被执行的任务，也可以分享所有任务',
                 tasks: tasks
             });
 
@@ -29,7 +31,7 @@ module.exports = (app) => {
     });
 
     // 删除任务
-    app.delete('/list', (req, res) => {
+    app.delete('/list', checkLogin, (req, res) => {
         let id = req.query.id;
         if (id) {
             task.remove({_id: id}, (err, task) => {
@@ -43,10 +45,10 @@ module.exports = (app) => {
     });
 
     // 添加任务
-    app.get('/newTask', (req, res) => {
+    app.get('/newTask', checkLogin, (req, res) => {
         res.render('newTask', {
-            title: '任务发布管理系统——新任务',
-            subtitle: '发布任务及相关信息',
+            title: '——新任务',
+            subtitle: '发布您的任务',
             task: {
                 title: '',
                 summary: '',
@@ -57,7 +59,7 @@ module.exports = (app) => {
     });
 
     // 查看、更新任务
-    app.get('/update/:id', (req, res) => {
+    app.get('/update/:id', checkLogin, (req, res) => {
         let id = req.params.id;
         if (id) {
             task.findById(id, (err, task) => {
@@ -71,7 +73,7 @@ module.exports = (app) => {
     });
 
     // 后台录入提交
-    app.post('/new', (req, res) => {
+    app.post('/new', checkLogin, (req, res) => {
         let {title, summary, details, account} = req.body.task;
         _task = new task({
             title,

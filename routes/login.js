@@ -6,20 +6,11 @@
 
 // 载入mongoose编译后的模型user
 let User = require('../models/users');
+let {checkLogin, checkNotLogin, isAdmin} = require('../utils/check');
 
 module.exports = (app) => {
-    // 列出所有用户
-    app.get('/user/all', (req, res) => {
-        User.fetch((err, users) => {
-            if (err) {
-                console.log(err);
-            }
-            res.json(users);
-        });
-    });
-
     // 跳转登录
-    app.get('/login', (req, res) => {
+    app.get('/login', checkNotLogin, (req, res) => {
         res.render('login', {
             title: '——登录',
             subtitle: '该任务发布系统支持用户以发布者或执行者发布、领取、执行和分享任务……'
@@ -27,7 +18,7 @@ module.exports = (app) => {
     });
 
     // 登录ing
-    app.post('/login', (req, res) => {
+    app.post('/login', checkNotLogin, (req, res) => {
 
         let {userName, password} = req.body;
 
@@ -43,13 +34,23 @@ module.exports = (app) => {
                     if(isMatch) {
                         // 将用户信息挂载到session
                         req.session.user = user;
-                        return res.redirect('/signup');
+                        return res.redirect('/list');
                     }else{
                         req.flash('error', '密码错误！');
                         return res.redirect('/login');
                     }
                 });
             }
+        });
+    });
+
+    // 列出所有用户
+    app.get('/user/all', checkLogin, isAdmin, (req, res) => {
+        User.fetch((err, users) => {
+            if (err) {
+                console.log(err);
+            }
+            res.json(users);
         });
     });
 };

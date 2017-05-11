@@ -3,9 +3,14 @@ let mongoose = require('mongoose');
 // 任务表结构
 let taskSchema = new mongoose.Schema({
     title: String,
-    summary: String,
     details: String,
     account: Number,
+    status: {
+        type: String,
+        enum: ['Y', 'N'],
+        default: 'N'
+    },
+    share: Array,
     // meta 更新或录入数据的时间记录
     meta: {
         createAt: {
