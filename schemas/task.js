@@ -5,6 +5,8 @@ let taskSchema = new mongoose.Schema({
     title: String,
     details: String,
     account: Number,
+    owner: String,
+    assign: String,
     status: {
         type: String,
         enum: ['Y', 'N'],
@@ -25,7 +27,7 @@ let taskSchema = new mongoose.Schema({
 });
 
 // taskSchema.pre 表示每次存储数据之前都先调用这个方法
-taskSchema.pre('save', (next) => {
+taskSchema.pre('save', function (next)  {
     if (this.isNew) {
         this.meta.createAt = this.meta.updateAt = Date.now();
     } else {

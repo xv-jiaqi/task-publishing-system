@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            a(href="/list") << 返回任务列表
+        .row
+            - if(task.owner === user.userName) {
+                form.form-horizontal(method="post", action="/update/#{task._id}")
+                    .form-group
+                        label.col-sm-3.control-label(for="password") 任务名称
+                        .col-sm-6
+                            input#password.form-control(type="text", name="task[title]", value="#{task.title}", placeholder="任务标题", required="required")
+                    .form-group
+                        label.col-sm-3.control-label(for="details") 任务详情
+                        .col-sm-6
+                            textarea#details.form-control(name="task[details]", rows="5", placeholder="请输入任务详情内容", required="required") #{task.details}
+                    .form-group
+                        label.col-sm-3.control-label(for="pay-account") 佣金
+                        .col-sm-6
+                            input#pay-account.form-control(type="number", name="task[account]", value="#{task.account}", min="1" max="100" step="0.01", placeholder="请输入1~100范围的任务佣金" required="required")
+                    .form-group
+                        .col-sm-3
+                        .col-sm-6.col-sm-offset-2
+                            button.btn.btn-info(type="submit") &emsp;&emsp;更新&emsp;&emsp;
+            - } else {
+                form.form-horizontal(method="post", action="/update/#{task._id}")
+                    .form-group
+                        label.col-sm-3.control-label(for="password") 任务名称
+                        .col-sm-6
+                            input#password.form-control(type="text", name="task[title]", value="#{task.title}", placeholder="任务标题", disabled="disabled")
+                    .form-group
+                        label.col-sm-3.control-label(for="details") 任务详情
+                        .col-sm-6
+                            textarea#details.form-control(name="task[details]", rows="5", placeholder="请输入任务详情内容", disabled="disabled") #{task.details}
+                    .form-group
+                        label.col-sm-3.control-label(for="pay-account") 佣金
+                        .col-sm-6
+                            input#pay-account.form-control(type="number", name="task[account]", value="#{task.account}", min="1" max="100" step="0.01", placeholder="请输入1~100范围的任务佣金" disabled="disabled")
+                    .form-group
+                        .col-sm-3
+                        .col-sm-6.col-sm-offset-2
+                            button.btn.btn-info(type="submit") &emsp;&emsp;领取任务&emsp;&emsp;
+            - }

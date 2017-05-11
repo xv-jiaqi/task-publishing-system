@@ -51,12 +51,10 @@ module.exports = (app) => {
         let {password} = req.body;
         let {userName} = req.params;
 
-        User.findOne({userName}, (err, user) => {
+        User.findById({userName}, (err, user) => {
             user.password = password;
             user.save((err, user) => {
-                if (err) {
-                    console.log(err);
-                }
+                if (err) console.log(err);
 
                 if (user) {
                     req.flash('success', `修改密码成功，5秒后跳转登陆页面！`);
@@ -66,7 +64,6 @@ module.exports = (app) => {
                     res.redirect(`/resetpwd/${userName}`);
                 }
             });
-
         });
     });
 };

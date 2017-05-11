@@ -6,17 +6,15 @@
 
 // 载入mongoose编译后的模型
 let user = require('../models/users');
-let task = require('../models/task');
+let Task = require('../models/task');
 let _underscore = require('underscore');
 let {checkLogin, checkNotLogin, isAdmin} = require('../utils/check');
 
 module.exports = (app) => {
     // 任务列表
     app.get('/list', checkLogin, (req, res) => {
-        task.fetch((err, tasks) => {
-            if (err) {
-                console.log(err);
-            }
+        Task.fetch((err, tasks) => {
+            if (err) console.log(err);
 
             if (tasks && tasks.length)
                 tasks.map((item) => item.account = item.account && item.account.toFixed(2));
@@ -34,7 +32,7 @@ module.exports = (app) => {
     app.delete('/list', checkLogin, (req, res) => {
         let id = req.query.id;
         if (id) {
-            task.remove({_id: id}, (err, task) => {
+            Task.remove({_id: id}, (err, task) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -48,43 +46,59 @@ module.exports = (app) => {
     app.get('/newTask', checkLogin, (req, res) => {
         res.render('newTask', {
             title: '——新任务',
-            subtitle: '发布您的任务',
-            task: {
-                title: '',
-                summary: '',
-                details: '',
-                account: ''
-            }
+            subtitle: '发布您的任务'
         });
     });
 
     // 查看、更新任务
     app.get('/update/:id', checkLogin, (req, res) => {
         let id = req.params.id;
-        if (id) {
-            task.findById(id, (err, task) => {
-                res.render('newTask', {
-                    title: '任务发布管理系统——详情',
-                    subtitle: '只有用户自己发布的任务才拥有修改权限！！！',
-                    task: task
-                });
+
+        Task.findById(id, (err, task) => {
+            res.render('updateTask', {
+                title: '——详情',
+                subtitle: '可领取他人的任务（只有发布者自己的任务才可以修改）！！！',
+                task: task
             });
-        }
+        });
+    });
+
+    // 提交更新
+    app.post('/update/:id', checkLogin, (req, res) => {
+
+        let {title, details, account} = req.body.task;
+        let id = req.params.id;
+
+        Task.findById(id, (err, task) => {
+            _underscore.extend(task, {title, details, account})
+                .save((err, task) => {
+                    if(err) console.log(err);
+
+                    if(task) {
+                        req.flash('success', '数据更新成功！:)');
+                        res.redirect(`/update/${id}`);
+                    } else {
+                        req.flash('error', '数据更新失败 :(');
+                        res.redirect(`/update/${id}`);
+                    }
+                });
+        });
     });
 
     // 后台录入提交
     app.post('/new', checkLogin, (req, res) => {
-        let {title, summary, details, account} = req.body.task;
+        let {title, details, account} = req.body.task;
+
         _task = new task({
             title,
-            summary,
             details,
-            account
+            account,
+            owner: req.session.user.userName
         });
-        _task.save((err, task) => {
-            if (err) {
-                console.log(err);
-            }
+
+        _Task.save((err, task) => {
+            if (err) console.log(err);
+
             res.redirect('/list');
         });
     });
