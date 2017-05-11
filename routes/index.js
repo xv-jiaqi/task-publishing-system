@@ -8,6 +8,7 @@ module.exports = (app) => {
     require('./login')(app);    // 登录路由
     require('./signup')(app);   // 注册路由
     require('./task')(app);     // 任务相关路由
+    require('./resetpwd')(app); // 找回密码
 
     // index page 首页
     app.get('/', (req, res) => {

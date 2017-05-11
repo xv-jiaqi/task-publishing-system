@@ -3,21 +3,20 @@ let bcrypt = require('bcryptjs');
 let SALT_WORK_FACTOR = 10;
 
 let usersSchema = new mongoose.Schema({
-    // userId: String,
-    userName: {
+    userName: {         // 用户名
         uniqe: true,
         type: String
-    },   // 用户名
+    },
     password: String,   // 密码
     payAccount: String, // 收款账号
     birth: Date,
     gender: {
         type: String,
-        enum: ['m','f','x']
+        enum: ['m', 'f', 'x']
     },
     admin: {
         type: String,
-        enum: ['Y','N'],
+        enum: ['Y', 'N'],
         default: 'N'
     },      // 是否为管理员
     meta: {
@@ -33,7 +32,7 @@ let usersSchema = new mongoose.Schema({
 });
 
 // 注册保存方法, 每次存储数据之前都调用
-usersSchema.pre('save', (next) => {
+usersSchema.pre('save', function (next) {
     let user = this;
     // 创建修改时间
     if (this.isNew) {
@@ -41,11 +40,11 @@ usersSchema.pre('save', (next) => {
     } else {
         this.meta.updateAt = Date.now();
     }
-    // 密码加盐 异步用法
-    bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+    // 密码加盐
+    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
         if (err) return next(err);
 
-        bcrypt.hash(user.password, salt, (err, hash) => {
+        bcrypt.hash(user.password, salt, function (err, hash) {
             if (err) return next(err);
 
             user.password = hash;
@@ -56,8 +55,8 @@ usersSchema.pre('save', (next) => {
 
 // 密码比较
 usersSchema.methods = {
-    comparePassword: (_password, callback) => {
-        bcrypt.compare(_password, this.password, (err, isMatch) => {
+    comparePassword: function (_password, callback) {
+        bcrypt.compare(_password, this.password, function (err, isMatch) {
             if (err) return callback(err);
 
             callback(null, isMatch);
@@ -80,6 +79,5 @@ usersSchema.statics = {
     }
 };
 
-// 导出movieSchema模式
 module.exports = usersSchema;
 

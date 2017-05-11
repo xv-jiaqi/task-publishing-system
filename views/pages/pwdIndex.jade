@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            form.form-horizontal(method="post", action="/resetpwd")
+                .form-group
+                    label.col-sm-4.control-label(for="username") 用户名
+                    .col-sm-4
+                        input#username.form-control(type="text", name="userName", placeholder="请输入5-11位的用户名", required="required")
+                .form-group
+                    label.col-sm-4.control-label(for="pay-account") 支付佣金账户
+                    .col-sm-4
+                        input#pay-account.form-control(type="text", name="payAccount", placeholder="用于获取佣金或支付使用，可使用支付宝账户", required="required")
+                    .col-sm-4.prompt.error
+                .form-group
+                    label.col-sm-4.control-label(for="gender") 性别
+                    .col-sm-4
+                        select#gender.form-control(name="gender")
+                            option(value="m", selected="selected") 男
+                            option(value="f") 女
+                            option(value="x") 保密
+                    .col-sm-4.prompt
+                .form-group
+                    .col-sm-4
+                    .col-sm-4.col-sm-offset-1
+                        button.btn.btn-success#btn-submit(type="submit") &emsp;校验信息&emsp;

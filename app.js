@@ -4,6 +4,7 @@ let path = require('path');         // 引入path模块的作用：因为页面�
 let routes = require('./routes');
 let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
+let flash = require('connect-flash');
 let config = require('./config');
 let app = express();
 
@@ -24,6 +25,9 @@ app.use(require('serve-static')('public')); // 静态文件处理 路径：publi
 app.set('views', './views/pages');      // 设置视图默认的文件路径
 app.set('view engine', 'jade');         // 设置视图引擎：jade
 
+// flash 中间价，用来显示通知
+app.use(flash());
+
 // session 中间件
 app.use(session({
     name: config.session.key,           // 设置 cookie 中保存 session id 的字段名称
@@ -40,6 +44,9 @@ app.use(session({
 
 app.use((req, res, next) => {
     if (!req.session) return next(new Error('session异常'));
+
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
 
     next();
 });

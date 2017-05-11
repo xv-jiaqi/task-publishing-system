@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            form.form-horizontal(method="post", action="/resetpwd")
+                .form-group
+                    label.col-sm-4.control-label(for="username") 用户名
+                    .col-sm-4
+                        input#username.form-control(type="text", name="userName", value="#{userName}" disabled="disabled")
+                .form-group
+                    label.col-sm-4.control-label(for="password") 重置密码
+                        span.warning.glyphicon-asterisk.mark-star
+                    .col-sm-4
+                        input#password.form-control(type="password", name="password", placeholder="请输入6-16位字母数字组合的密码", required="required")
+                    .col-sm-4.prompt.error
+                .form-group
+                    label.col-sm-4.control-label(for="crm-password") 再次确认
+                        span.warning.glyphicon-asterisk.mark-star
+                    .col-sm-4
+                        input#crm-password.form-control(type="password", placeholder="请确认您输入的密码", required="required")
+                    .col-sm-4.prompt.error
+                .form-group
+                    .col-sm-4
+                    .col-sm-4.col-sm-offset-1
+                        button.btn.btn-success#btn-submit(type="submit") &emsp;提交&emsp;
+    script(src="../js/validation.js")
