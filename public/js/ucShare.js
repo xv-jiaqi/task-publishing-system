@@ -2,7 +2,7 @@
  * uc分享到朋友圈或发送给朋友
  */
 onShare('.shareTimeLine', 'click', {
-    title: 'test',
+    title: '任务分发系统',
     url: location.href,
     img: 'https://static.segmentfault.com/v-590a963a/global/img/fool/welcome@2x.png'
 });

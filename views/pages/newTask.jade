@@ -3,6 +3,8 @@ extends ../layout
 block content
     .container
         .row
+            a(href="/list") << 返回任务列表
+        .row
             form.form-horizontal(method="post", action="/new")
                 .form-group
                     label.col-sm-3.control-label(for="password") 任务名称

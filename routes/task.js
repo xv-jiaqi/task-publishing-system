@@ -5,7 +5,6 @@
  */
 
 // 载入mongoose编译后的模型
-let user = require('../models/users');
 let Task = require('../models/task');
 let _underscore = require('underscore');
 let {checkLogin, checkNotLogin, isAdmin} = require('../utils/check');
@@ -53,7 +52,6 @@ module.exports = (app) => {
     // 查看、更新任务
     app.get('/update/:id', checkLogin, (req, res) => {
         let id = req.params.id;
-
         Task.findById(id, (err, task) => {
             res.render('updateTask', {
                 title: '——详情',
@@ -66,22 +64,40 @@ module.exports = (app) => {
     // 提交更新
     app.post('/update/:id', checkLogin, (req, res) => {
 
-        let {title, details, account} = req.body.task;
+        let {title, details, account} = req.body.task || {};
         let id = req.params.id;
+        let user = req.session.user;
+        let prompt = {};
 
         Task.findById(id, (err, task) => {
-            _underscore.extend(task, {title, details, account})
-                .save((err, task) => {
-                    if(err) console.log(err);
 
-                    if(task) {
-                        req.flash('success', '数据更新成功！:)');
-                        res.redirect(`/update/${id}`);
-                    } else {
-                        req.flash('error', '数据更新失败 :(');
-                        res.redirect(`/update/${id}`);
-                    }
-                });
+            let _task = null;
+            if(title && details && account) {
+                _task = _underscore.extend(task, {title, details, account});
+            } else {
+                task.assign = user.userName;
+                _task = task;
+            }
+
+            _task.save((err, task) => {
+                if (err) console.log(err);
+
+                if (task.owner === req.session.user.userName) {
+                    prompt.success = '数据更新成功！:)';
+                    prompt.error = '数据更新失败 :(';
+                } else {
+                    prompt.success = '任务领取成功！:)';
+                    prompt.error = '任务领取失败 :(';
+                }
+
+                if (task) {
+                    req.flash('success', prompt.success);
+                    res.redirect(`/update/${id}`);
+                } else {
+                    req.flash('error', prompt.error);
+                    res.redirect(`/update/${id}`);
+                }
+            });
         });
     });
 
@@ -89,14 +105,14 @@ module.exports = (app) => {
     app.post('/new', checkLogin, (req, res) => {
         let {title, details, account} = req.body.task;
 
-        _task = new task({
+        _task = new Task({
             title,
             details,
             account,
             owner: req.session.user.userName
         });
 
-        _Task.save((err, task) => {
+        _task.save((err, task) => {
             if (err) console.log(err);
 
             res.redirect('/list');

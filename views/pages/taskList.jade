@@ -13,6 +13,8 @@ block content
                         th 查看详情
                         th 创建日期
                         th 最后更新日期
+                        th 发布者
+                        th 领取者
                         th 删除
                         th 佣金
                         th 状态
@@ -25,10 +27,12 @@ block content
                             td: a(target="_blank", href="/update/#{item._id}") 查看
                             td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
                             td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+                            td #{item.owner}
+                            td #{item.assign}
                             td
                                 button.btn.btn-danger.del(type="button", data-id="#{item._id}") 删除
                             td.glyphicon-yen #{item.account}
-                            td #{item.account}
+                            td #{item.status}
                             td.glyphicon.glyphicon-share.shareTimeLine
 
     script(src='/js/taskDel.js')

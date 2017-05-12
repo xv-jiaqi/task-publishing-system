@@ -26,17 +26,17 @@ block content
             - } else {
                 form.form-horizontal(method="post", action="/update/#{task._id}")
                     .form-group
-                        label.col-sm-3.control-label(for="password") 任务名称
+                        label.col-sm-3.control-label 任务名称
                         .col-sm-6
-                            input#password.form-control(type="text", name="task[title]", value="#{task.title}", placeholder="任务标题", disabled="disabled")
+                            input.form-control(type="text", name="task[title]", value="#{task.title}", disabled="disabled")
                     .form-group
-                        label.col-sm-3.control-label(for="details") 任务详情
+                        label.col-sm-3.control-label 任务详情
                         .col-sm-6
-                            textarea#details.form-control(name="task[details]", rows="5", placeholder="请输入任务详情内容", disabled="disabled") #{task.details}
+                            textarea.form-control(name="task[details]", rows="5", disabled="disabled") #{task.details}
                     .form-group
-                        label.col-sm-3.control-label(for="pay-account") 佣金
+                        label.col-sm-3.control-label 佣金
                         .col-sm-6
-                            input#pay-account.form-control(type="number", name="task[account]", value="#{task.account}", min="1" max="100" step="0.01", placeholder="请输入1~100范围的任务佣金" disabled="disabled")
+                            input.form-control(type="number", name="task[account]", value="#{task.account}", min="1" max="100" step="0.01", disabled="disabled")
                     .form-group
                         .col-sm-3
                         .col-sm-6.col-sm-offset-2

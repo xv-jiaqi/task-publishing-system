@@ -45,13 +45,13 @@ module.exports = (app) => {
         });
     });
 
-    // 体检密码密码
+    // 提交密码
     app.post('/resetpwd/:userName', checkNotLogin, (req, res) => {
 
         let {password} = req.body;
         let {userName} = req.params;
 
-        User.findById({userName}, (err, user) => {
+        User.findOne({userName}, (err, user) => {
             user.password = password;
             user.save((err, user) => {
                 if (err) console.log(err);
